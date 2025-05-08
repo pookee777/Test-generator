@@ -5,7 +5,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import declarative_base
 import secrets
 from datetime import timedelta
 
@@ -17,8 +17,7 @@ if not hasattr(sys, 'real_prefix'):
 
 from extensions import db, login_manager, mail
 
-class Base(DeclarativeBase):
-    pass
+Base = declarative_base()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
