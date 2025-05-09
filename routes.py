@@ -11,7 +11,7 @@ def create_routes():
     
     from models import (User, Question, Chapter, Test, TestQuestion, TestResult, 
                        QuestionAnswer, UserRole, QuestionDifficulty, QuestionType)
-    from forms import (LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm,
+    from forms import (LoginForm, RegistrationForm, ResetPasswordForm,
                       QuestionForm, CreateTestForm, StudentGenerateTestForm, AnswerForm, PersonalizedTestForm)
     from utils import format_duration, calculate_grade, utc_to_local
     from recommendation import recommender
