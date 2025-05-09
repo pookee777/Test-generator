@@ -31,18 +31,9 @@
                     </div>
                     <div class="col-md-4">
                         <div class="card bg-dark border-secondary text-center p-3">
-                            <h2 class="display-4 mb-0">{{ score_percentage }}%</h2>
-                            <p class="text-muted">Your Score</p>
-                            <div class="d-flex justify-content-center mb-2">
-                                <div class="progress" style="height: 8px; width: 80%;">
-                                    <div class="progress-bar 
-                                        {% if score_percentage >= 80 %}bg-success
-                                        {% elif score_percentage >= 60 %}bg-info
-                                        {% elif score_percentage >= 40 %}bg-warning
-                                        {% else %}bg-danger{% endif %}"
-                                        role="progressbar" style="width: '{{ score_percentage }}%'">
-                                    </div>
-                                </div>
+                            <h2 class="display-4 mb-1">{{ score_percentage }}%</h2>
+                            <p class="text-muted mb-0">Your Score</p>
+                            <div class="d-flex justify-content-center">
                             </div>
                             <p class="mb-0">
                                 <strong>{{ test_result.total_score }} / {{ test.total_marks }}</strong> marks
@@ -174,7 +165,7 @@
                 <h5 class="card-title mb-0">Performance Analysis</h5>
             </div>
             <div class="card-body">
-                <canvas id="chapterPerformanceChart" width="100%" height="200"></canvas>
+                <canvas id="chapterPerformanceChart" width="100%" height="100"></canvas>
                 
                 <hr class="my-4">
                 
@@ -202,7 +193,7 @@
                                                     {% elif data.percentage >= 60 %}bg-info
                                                     {% elif data.percentage >= 40 %}bg-warning
                                                     {% else %}bg-danger{% endif %}"
-                                                    role="progressbar" style="width: '{{ data.percentage }}%'">
+                                                    role="progressbar" style="width: {{ data.percentage }}%">
                                                 </div>
                                             </div>
                                         </div>
@@ -292,8 +283,8 @@ $(document).ready(function() {
         },
         options: {
             responsive: true,
-            scales: {y: {beginAtZero: true, max: 100}},
-            plugins: {legend: {display: false}}
+            scales: {y: {beginAtZero: true, max: 100, ticks: { color: '#ffffff'}}, x:{ticks: {color: '#ffffff'}}},
+            plugins: {legend: {display: false,labels: {color: '#ffffff'}}}
         }
     });
 });
