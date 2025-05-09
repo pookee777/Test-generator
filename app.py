@@ -4,7 +4,7 @@ import logging
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from sqlalchemy.ext.declarative import declarative_base
+
 import secrets
 from datetime import timedelta
 from dotenv import load_dotenv
@@ -16,8 +16,6 @@ if not hasattr(sys, 'real_prefix'):
     sys.real_prefix = getattr(sys, 'base_prefix', sys.prefix)
 
 from extensions import db, login_manager
-
-Base = declarative_base()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
