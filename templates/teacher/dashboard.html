@@ -136,7 +136,7 @@
                                                         {% elif student.avg_score >= 60 %}bg-info
                                                         {% elif student.avg_score >= 40 %}bg-warning
                                                         {% else %}bg-danger{% endif %}"
-                                                        role="progressbar" style="width: '{{ (student.avg_score * 100)|round|int }}%';">
+                                                        role="progressbar" style="width: {{ (student.avg_score * 100)|round|int }}%;">
                                                     </div>
                                                 </div>
                                             </div>
