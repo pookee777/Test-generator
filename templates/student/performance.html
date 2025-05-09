@@ -126,7 +126,7 @@
                                                     {% elif test.percentage >= 60 %}bg-info
                                                     {% elif test.percentage >= 40 %}bg-warning
                                                     {% else %}bg-danger{% endif %}"
-                                                    role="progressbar" style="width: '{{ test.percentage }}%'">
+                                                    role="progressbar" style="width: {{ test.percentage|float }}%;">
                                                 </div>
                                             </div>
                                         </div>
