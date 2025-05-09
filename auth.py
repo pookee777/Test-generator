@@ -25,7 +25,7 @@ def register():
             email=form.email.data,
             role=UserRole(form.role.data)
         )
-        user.set_password(form.password.data)
+        user.set_password(form.password.data, method='pbkdf2:sha256')
         
         if form.role.data == UserRole.STUDENT.value and form.teacher.data:
             user.teacher_id = int(form.teacher.data)
