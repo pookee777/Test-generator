@@ -62,26 +62,7 @@ def login():
             return redirect(url_for('routes.student_dashboard'))
 
     return render_template('login.html')
-@auth_bp.route('/rehash_passwords')
-@login_required
-def rehash_passwords():
-    if current_user.role != 'admin':  # Or whatever your admin role is
-        flash('Access denied.', 'danger')
-        return redirect(url_for('routes.index'))
 
-    users = User.query.all()
-    count = 0
-
-    for user in users:
-        if user.password_hash.startswith('scrypt:'):
-            # Ask the user to input a new password instead of trying to rehash without it
-            flash(f"User {user.email} has an unsupported password hash. Please ask them to reset their password.", "warning")
-        elif not user.password_hash.startswith('pbkdf2:sha256'):
-            # Already rehashed or safe
-            continue
-
-    flash(f"Password hashes checked.", "info")
-    return redirect(url_for('routes.index'))
 @auth_bp.route('/reset_password')
 def reset_password():
     return render_template('reset_password.html')
