@@ -1,13 +1,12 @@
-import os
 import sys
 import logging
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_mail import Mail
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.ext.declarative import declarative_base
 import secrets
 from datetime import timedelta
+from dotenv import load_dotenv
 
 # Add the project root directory to Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -15,13 +14,16 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 if not hasattr(sys, 'real_prefix'):
     sys.real_prefix = getattr(sys, 'base_prefix', sys.prefix)
 
-from extensions import db, login_manager, mail
+from extensions import db, login_manager
 
 Base = declarative_base()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
+# Load environment variables from .env file
+load_dotenv()
 
 def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='static')  # Ensure 'static' is specified
@@ -40,16 +42,6 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     logger.debug(f"Database URI set to: {app.config['SQLALCHEMY_DATABASE_URI']}")
-
-    # Configure Flask-Mail
-    app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER", "smtp.gmail.com")
-    app.config["MAIL_PORT"] = int(os.environ.get("MAIL_PORT", 587))
-    app.config["MAIL_USE_TLS"] = os.environ.get("MAIL_USE_TLS", "True").lower() in ["true", "1", "t"]
-    app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME", "")
-    app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD", "")
-    app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER", "noreply@example.com")
-    logger.debug("Mail configuration set")
-
     # Add a context processor to inject `current_user` into templates
     from flask_login import current_user
     @app.context_processor
@@ -60,7 +52,6 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'  # Specify the login view
-    mail.init_app(app)
     logger.debug("Extensions initialized")
 
     with app.app_context():
@@ -79,7 +70,7 @@ def create_app():
         # Create database tables
         db.create_all()
         logger.debug("Database tables created")
-
+    
     @app.route('/health')
     def health_check():
         try:
