@@ -82,3 +82,6 @@ def rehash_passwords():
 
     flash(f"Password hashes checked.", "info")
     return redirect(url_for('routes.index'))
+@auth_bp.route('/reset_password')
+def reset_password():
+    return render_template('reset_password.html')
