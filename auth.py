@@ -63,6 +63,15 @@ def login():
 
     return render_template('login.html')
 
-@auth_bp.route('/reset_password')
+from forms import ResetPasswordForm
+
+@auth_bp.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
-    return render_template('reset_password.html')
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        # You can add logic here to send a token or process reset
+        flash("Password reset instructions will be sent if the email exists.", "info")
+        return redirect(url_for('auth.login'))
+
+    return render_template('reset_password.html', form=form)
